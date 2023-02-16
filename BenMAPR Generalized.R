@@ -92,20 +92,28 @@ health.calculation <- function(cmaqdata, cmaq_tract_int_tbl) {
            # deathsno2atkinson_high = as.numeric(polyarea) * poly.pop25over.dens * 0.0015 * no2 * mr.25over,
            
            cvhosppm_mid = as.numeric(polyarea) * poly.pop65over.dens * 0.00094 * pm * cvhosp_rate65over, # old CPP
-           cvhosppm_low = as.numeric(polyarea) * poly.pop65over.dens * (0.00094 + (0.00015 * 1.96)) * pm * cvhosp_rate65over,
-           cvhosppm_high = as.numeric(polyarea) * poly.pop65over.dens * (0.00094 - (0.00015 * 1.96)) * pm * cvhosp_rate65over,
+           cvhosppm_low = as.numeric(polyarea) * poly.pop65over.dens * (0.00094 - (0.00015 * 1.96)) * pm * cvhosp_rate65over,
+           cvhosppm_high = as.numeric(polyarea) * poly.pop65over.dens * (0.00094 + (0.00015 * 1.96)) * pm * cvhosp_rate65over,
            
            rsphosppm_mid = as.numeric(polyarea) * poly.pop65over.dens * 0.0011 * pm * resphosp_rate65over, # old CPP
-           rsphosppm_low = as.numeric(polyarea) * poly.pop65over.dens * (0.0011 + (0.00027 * 1.96)) * pm * resphosp_rate65over,
-           rsphosppm_high = as.numeric(polyarea) * poly.pop65over.dens * (0.0011 - (0.00027 * 1.96)) * pm * resphosp_rate65over,
+           rsphosppm_low = as.numeric(polyarea) * poly.pop65over.dens * (0.0011 - (0.00027 * 1.96)) * pm * resphosp_rate65over,
+           rsphosppm_high = as.numeric(polyarea) * poly.pop65over.dens * (0.0011 + (0.00027 * 1.96)) * pm * resphosp_rate65over,
+           
+           cverpm_mid = as.numeric(polyarea) * poly.pop65over.dens * 0.00094 * pm * cver_rate65over, # old CPP
+           cverpm_low = as.numeric(polyarea) * poly.pop65over.dens * (0.00094 - (0.00015 * 1.96)) * pm * cver_rate65over,
+           cverpm_high = as.numeric(polyarea) * poly.pop65over.dens * (0.00094 + (0.00015 * 1.96)) * pm * cver_rate65over,
+           
+           rsperpm_mid = as.numeric(polyarea) * poly.pop65over.dens * 0.0011 * pm * resper_rate65over, # old CPP
+           rsperpm_low = as.numeric(polyarea) * poly.pop65over.dens * (0.0011 - (0.00027 * 1.96)) * pm * resper_rate65over,
+           rsperpm_high = as.numeric(polyarea) * poly.pop65over.dens * (0.0011 + (0.00027 * 1.96)) * pm * resper_rate65over,
            
            amipm_mid = as.numeric(polyarea) * poly.pop18over.dens * 0.0025 * pm * ami_rate18over, # Mustafic
            amipm_low = as.numeric(polyarea) * poly.pop18over.dens * 0.0015 * pm * ami_rate18over,
            amipm_high = as.numeric(polyarea) * poly.pop18over.dens * 0.0036 * pm * ami_rate18over,
            
-           amino2_mid = as.numeric(polyarea) * poly.pop18over.dens * 0.0011 * 1.88 * no2 * ami_rate18over, # Mustafic
-           amino2_low = as.numeric(polyarea) * poly.pop18over.dens * 0.0006 * 1.88 * no2 * ami_rate18over,
-           amino2_high = as.numeric(polyarea) * poly.pop18over.dens * 0.0016 * 1.88 * no2 * ami_rate18over,
+           amino2_mid = as.numeric(polyarea) * poly.pop18over.dens * 0.0011 * no2 * 1.88 * ami_rate18over, # Mustafic
+           amino2_low = as.numeric(polyarea) * poly.pop18over.dens * 0.0006 * no2 * 1.88 * ami_rate18over,
+           amino2_high = as.numeric(polyarea) * poly.pop18over.dens * 0.0016 * no2 * 1.88 * ami_rate18over,
            
            resphospo3_mid = as.numeric(polyarea) * poly.pop65over.dens * 0.0016 * o3 * resphosp_rate65over, # Ji - paper gives % change / 10 ppb, this is converted to change per 1 ppb
            resphospo3_low = as.numeric(polyarea) * poly.pop65over.dens * 0.00058 * o3 * resphosp_rate65over,
@@ -115,49 +123,65 @@ health.calculation <- function(cmaqdata, cmaq_tract_int_tbl) {
            asthmapminc0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * 0.00995 * pm * asthmaincrate_0to4,
            asthmapminc0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * 0.0488 * pm * asthmaincrate_0to4,
            
-           asthmano2inc0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * 0.0122 * 1.88 * no2 * asthmaincrate_0to4, # Khreis
-           asthmano2inc0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * 0.00495 * 1.88 * no2 * asthmaincrate_0to4,
-           asthmano2inc0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * 0.0169 * 1.88 * no2 * asthmaincrate_0to4,
+           asthmano2inc0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * 0.0122 * no2 * 1.88 * asthmaincrate_0to4, # Khreis
+           asthmano2inc0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * 0.00495 * no2 * 1.88 * asthmaincrate_0to4,
+           asthmano2inc0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * 0.0169 * no2 * 1.88 * asthmaincrate_0to4,
            
            asthmapminc5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * 0.0296 * pm * asthmaincrate_5to17, # Khreis
            asthmapminc5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * 0.00995 * pm * asthmaincrate_5to17,
            asthmapminc5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * 0.0488 * pm * asthmaincrate_5to17,
            
-           asthmano2inc5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * 0.0122 * 1.88 * no2 * asthmaincrate_5to17, # Khreis
-           asthmano2inc5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * 0.00495 * 1.88 * no2 * asthmaincrate_5to17,
-           asthmano2inc5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * 0.0169 * 1.88 * no2 * asthmaincrate_5to17,
+           asthmano2inc5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * 0.0122 * no2 * 1.88 * asthmaincrate_5to17, # Khreis
+           asthmano2inc5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * 0.00495 * no2 * 1.88 * asthmaincrate_5to17,
+           asthmano2inc5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * 0.0169 * no2 * 1.88 * asthmaincrate_5to17,
            
            asthmapmha0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.022) / 10) * pm * asthmaharate_0to4, # Orellano
            asthmapmha0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * (log(1) / 10) * pm * asthmaharate_0to4,
            asthmapmha0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.045) / 10) * pm * asthmaharate_0to4,
            
-           asthmano2ha0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.040) / 10) * no2 * asthmaharate_0to4, # Orellano
-           asthmano2ha0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.001) / 10) * no2 * asthmaharate_0to4,
-           asthmano2ha0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.081) / 10) * no2 * asthmaharate_0to4,
+           asthmano2ha0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.040) / 10) * no2 * 1.88 * asthmaharate_0to4, # Orellano
+           asthmano2ha0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.001) / 10) *  no2 * 1.88 * asthmaharate_0to4,
+           asthmano2ha0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.081) / 10) * no2 * 1.88 * asthmaharate_0to4,
            
            asthmapmha5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.022) / 10) * pm * asthmaharate_5to17, # Orellano
            asthmapmha5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * (log(1) / 10) * pm * asthmaharate_5to17,
            asthmapmha5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.045) / 10) * pm * asthmaharate_5to17,
            
-           asthmano2ha5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.040) / 10) * no2 * asthmaharate_5to17, # Orellano
-           asthmano2ha5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.001) / 10) * no2 * asthmaharate_5to17,
-           asthmano2ha5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.081) / 10) * no2 * asthmaharate_5to17,
+           asthmano2ha5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.040) / 10) * no2 * 1.88 * asthmaharate_5to17, # Orellano
+           asthmano2ha5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.001) / 10) * no2 * 1.88  * asthmaharate_5to17,
+           asthmano2ha5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.081) / 10) * no2 * 1.88  * asthmaharate_5to17,
            
            asthmapmed0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.022) / 10) * pm * asthmaedrate_0to4, # Orellano
            asthmapmed0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * (log(1) / 10) * pm * asthmaedrate_0to4,
            asthmapmed0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.045) / 10) * pm * asthmaedrate_0to4,
            
-           asthmano2ed0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.040) / 10) * no2 * asthmaedrate_0to4, # Orellano
-           asthmano2ed0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.001) / 10) * no2 * asthmaedrate_0to4,
-           asthmano2ed0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.081) / 10) * no2 * asthmaedrate_0to4,
+           asthmano2ed0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.040) / 10) * no2 * 1.88 * asthmaedrate_0to4, # Orellano
+           asthmano2ed0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.001) / 10) * no2 * 1.88 * asthmaedrate_0to4,
+           asthmano2ed0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.081) / 10) * no2 * 1.88 * asthmaedrate_0to4,
            
            asthmapmed5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.022) / 10) * pm * asthmaedrate_5to17, # Orellano
            asthmapmed5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * (log(1) / 10) * pm * asthmaedrate_5to17,
            asthmapmed5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.045) / 10) * pm * asthmaedrate_5to17,
            
-           asthmano2ed5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.040) / 10) * no2 * asthmaedrate_5to17, # Orellano
-           asthmano2ed5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.001) / 10) * no2 * asthmaedrate_5to17,
-           asthmano2ed5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.081) / 10) * no2 * asthmaedrate_5to17,
+           asthmano2ed5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.040) / 10) * no2 * 1.88 * asthmaedrate_5to17, # Orellano
+           asthmano2ed5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.001) / 10) * no2 * 1.88 * asthmaedrate_5to17,
+           asthmano2ed5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.081) / 10) * no2 * 1.88 * asthmaedrate_5to17,
+           
+           asthmapmexac0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.022) / 10) * pm * asthmaexac_anninc_0to4, # Orellano
+           asthmapmexac0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * (log(1) / 10) * pm * asthmaexac_anninc_0to4,
+           asthmapmexac0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.045) / 10) * pm * asthmaexac_anninc_0to4,
+           
+           asthmano2exac0to4_mid = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.040) / 10) * no2 * 1.88 * asthmaexac_anninc_0to4, # Orellano
+           asthmano2exac0to4_low = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.001) / 10) * no2 * 1.88 * asthmaexac_anninc_0to4,
+           asthmano2exac0to4_high = as.numeric(polyarea) * poly.pop0to4.dens * (log(1.081) / 10) * no2 * 1.88 * asthmaexac_anninc_0to4,
+           
+           asthmapmexac5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.022) / 10) * pm * asthmaexac_anninc_5to17, # Orellano
+           asthmapmexac5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * (log(1) / 10) * pm * asthmaexac_anninc_5to17,
+           asthmapmexac5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.045) / 10) * pm * asthmaexac_anninc_5to17,
+           
+           asthmano2exac5to17_mid = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.040) / 10) * no2 * 1.88 * asthmaexac_anninc_5to17, # Orellano
+           asthmano2exac5to17_low = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.001) / 10) * no2 * 1.88 * asthmaexac_anninc_5to17,
+           asthmano2exac5to17_high = as.numeric(polyarea) * poly.pop5to17.dens * (log(1.081) / 10) * no2 * 1.88 * asthmaexac_anninc_5to17,
            
            lbwpm_mid = as.numeric(polyarea) * poly.popinfants.dens * 0.0086 * pm * lbw_rate, # Sun
            lbwpm_low = as.numeric(polyarea) * poly.popinfants.dens * 0.0031 * pm * lbw_rate,
